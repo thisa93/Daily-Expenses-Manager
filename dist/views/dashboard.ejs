@@ -12,7 +12,7 @@
             <div class="card text-white bg-success mb-3">
                 <div class="card-header">Total Income</div>
                 <div class="card-body">
-                    <h5 class="card-title">$<%= totalIncome.toFixed(2) %>
+                    <h5 class="card-title">Rs.<%= totalIncome.toFixed(2) %>
                     </h5>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="card text-white bg-danger mb-3">
                 <div class="card-header">Total Expense</div>
                 <div class="card-body">
-                    <h5 class="card-title">$<%= totalExpense.toFixed(2) %>
+                    <h5 class="card-title">Rs.<%= totalExpense.toFixed(2) %>
                     </h5>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="card text-white bg-primary mb-3">
                 <div class="card-header">Total Balance (Sources)</div>
                 <div class="card-body">
-                    <h5 class="card-title">$<%= totalSourceBalance.toFixed(2) %>
+                    <h5 class="card-title">Rs.<%= totalSourceBalance.toFixed(2) %>
                     </h5>
                 </div>
             </div>
@@ -65,7 +65,8 @@
                             </div>
                             <span
                                 class="badge <%= source.balance < 0 ? 'bg-warning text-dark' : 'bg-primary' %> rounded-pill">$
-                                <%= source.balance.toFixed(2) %></span>
+                                <%= source.balance.toFixed(2) %>
+                            </span>
                         </li>
                         <% }) %>
                             <% if (sources.length===0) { %>
