@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Your Accounts</h2>
+            <a href="/sources/add" class="btn btn-primary mb-3">Add New Account</a>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Balance</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% sources.forEach(source=> { %>
+                        <tr>
+                            <td>
+                                <%= source.name %>
+                            </td>
+                            <td>
+                                <%= source.type %>
+                            </td>
+                            <td>$<%= source.balance.toFixed(2) %>
+                            </td>
+                            <td>
+                                <% if(source.type==='credit_card' && source.creditLimit) { %>
+                                    Limit: $<%= source.creditLimit %> | Avail: $<%= (source.creditLimit +
+                                            source.balance).toFixed(2) %>
+                                            <% } else { %>
+                                                -
+                                                <% } %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>

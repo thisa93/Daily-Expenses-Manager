@@ -1,0 +1,107 @@
+<%- include('../partials/header') %>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mt-4">
+                <div class="card-header">Add Transaction</div>
+                <div class="card-body">
+                    <form action="/transactions/add" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <select class="form-select" name="type" id="type" onchange="toggleFields()">
+                                <option value="expense">Expense</option>
+                                <option value="income">Income</option>
+                                <option value="transfer">Transfer</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input type="number" step="0.01" class="form-control" name="amount" required>
+                        </div>
+
+                        <div class="mb-3" id="categoryField">
+                            <label class="form-label">Category</label>
+                            <input type="text" class="form-control" name="category" placeholder="Food, Salary, etc."
+                                required>
+                        </div>
+
+                        <div class="mb-3" id="natureField">
+                            <label class="form-label">Nature (Expense only)</label>
+                            <select class="form-select" name="nature">
+                                <option value="Variable">Variable</option>
+                                <option value="Fixed">Fixed</option>
+                                <option value="Unwanted">Unwanted</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+
+                        <!-- Source (From) -->
+                        <div class="mb-3">
+                            <label class="form-label" id="sourceLabel">Source Account (From)</label>
+                            <select class="form-select" name="sourceId" required>
+                                <% sources.forEach(source=> { %>
+                                    <option value="<%= source._id %>">
+                                        <%= source.name %> (Bal: <%= source.balance %>)
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <!-- Destination (To) - for transfer -->
+                        <div class="mb-3 d-none" id="destinationField">
+                            <label class="form-label">Destination Account (To)</label>
+                            <select class="form-select" name="destinationId">
+                                <% sources.forEach(source=> { %>
+                                    <option value="<%= source._id %>">
+                                        <%= source.name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control" name="description">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Transaction</button>
+                        <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFields() {
+            const type = document.getElementById('type').value;
+            const natureField = document.getElementById('natureField');
+            const destinationField = document.getElementById('destinationField');
+            const sourceLabel = document.getElementById('sourceLabel');
+            const categoryField = document.getElementById('categoryField');
+            const categoryInput = categoryField.querySelector('input');
+
+            if (type === 'expense') {
+                natureField.classList.remove('d-none');
+                destinationField.classList.add('d-none');
+                sourceLabel.innerText = "Paid Via (Source)";
+                categoryField.classList.remove('d-none');
+            } else if (type === 'income') {
+                natureField.classList.add('d-none');
+                destinationField.classList.add('d-none');
+                sourceLabel.innerText = "Deposit To (Source)";
+                categoryField.classList.remove('d-none');
+            } else if (type === 'transfer') {
+                natureField.classList.add('d-none');
+                destinationField.classList.remove('d-none');
+                sourceLabel.innerText = "From Account";
+                categoryField.classList.add('d-none'); // Optional for transfer? Or default?
+                categoryInput.value = "Transfer"; // Auto-set
+            }
+        }
+        // Init
+        toggleFields();
+    </script>
+
+    <%- include('../partials/footer') %>

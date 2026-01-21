@@ -1,0 +1,60 @@
+<%- include('../partials/header') %>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-4">
+                <div class="card-header">Add New Account / Source</div>
+                <div class="card-body">
+                    <form action="/sources/add" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label">Account Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="e.g. HDFC Bank, My Wallet"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <select class="form-select" name="type" id="type" onchange="toggleLimit()">
+                                <option value="bank">Bank Account</option>
+                                <option value="cash">Cash In Hand</option>
+                                <option value="credit_card">Credit Card</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 d-none" id="limitField">
+                            <label class="form-label">Credit Limit (Max Limit)</label>
+                            <input type="number" step="0.01" class="form-control" name="creditLimit" value="0">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" id="balanceLabel">Initial Balance</label>
+                            <input type="number" step="0.01" class="form-control" name="balance" required>
+                            <small class="form-text text-muted" id="balanceHelp">Positive for money you already have.
+                                Negative for money you owe (Credit Card Debt).</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Account</button>
+                        <a href="/dashboard" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleLimit() {
+            const type = document.getElementById('type').value;
+            const limitField = document.getElementById('limitField');
+            const balanceLabel = document.getElementById('balanceLabel');
+            const balanceHelp = document.getElementById('balanceHelp');
+
+            if (type === 'credit_card') {
+                limitField.classList.remove('d-none');
+                balanceLabel.innerText = "Current Outstanding Balance (Use Negative ' - ')";
+                balanceHelp.innerText = "e.g. -500 if you owe 500. 0 if no debt.";
+            } else {
+                limitField.classList.add('d-none');
+                balanceLabel.innerText = "Initial Balance";
+                balanceHelp.innerText = "Amount currently in the account/hand.";
+            }
+        }
+        toggleLimit(); 
+    </script>
+
+    <%- include('../partials/footer') %>
