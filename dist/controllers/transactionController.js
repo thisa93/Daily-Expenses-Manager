@@ -2,7 +2,7 @@ import Transaction from '../models/Transaction.js';
 import Source from '../models/Source.js';
 // Add Transaction (Income, Expense, Transfer)
 export const addTransaction = async (req, res) => {
-    const { type, amount, category, description, sourceId, destinationId, nature } = req.body;
+    const { type, amount, category, description, sourceId, destinationId, nature, date } = req.body;
     const userId = req.session.userId;
     const numAmount = parseFloat(amount);
     try {
@@ -11,6 +11,7 @@ export const addTransaction = async (req, res) => {
             user: userId,
             type,
             amount: numAmount,
+            date: date ? new Date(date) : undefined,
             category,
             description,
             source: sourceId,

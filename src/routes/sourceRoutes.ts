@@ -1,5 +1,5 @@
 import express from 'express';
-import { getSources, addSource, renderAddSource } from '../controllers/sourceController.js';
+import { getSources, addSource, renderAddSource, renderEditSource, editSource } from '../controllers/sourceController.js';
 
 const router = express.Router();
 
@@ -13,5 +13,7 @@ import { protect } from '../middlewares/authMiddleware.js';
 router.get('/', protect, getSources);
 router.get('/add', protect, renderAddSource);
 router.post('/add', protect, addSource);
+router.get('/edit/:id', protect, renderEditSource);
+router.post('/edit/:id', protect, editSource);
 
 export default router;
