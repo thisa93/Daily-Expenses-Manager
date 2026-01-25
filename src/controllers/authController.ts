@@ -3,7 +3,8 @@ import User from '../models/User.js';
 
 // Register User
 export const registerUser = async (req: Request, res: Response) => {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
+    const role = 'member'; // Force role to member for public registration
     try {
         const userExists = await User.findOne({ email });
         if (userExists) {
@@ -24,6 +25,9 @@ export const loginUser = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({ email });
         if (user && (await user.matchPassword(password))) {
+            if (user.status === 'suspended') {
+                return res.status(403).render('auth/login', { error: 'Your account has been suspended. Contact Admin.' });
+            }
             req.session.userId = (user._id as unknown as string);
             res.redirect('/dashboard');
         } else {

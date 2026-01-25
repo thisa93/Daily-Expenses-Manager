@@ -4,8 +4,14 @@ import mongoose from 'mongoose';
 export const getDashboard = async (req, res) => {
     try {
         const userId = req.session.userId;
+        const { source, nature } = req.query;
+        let query = { user: userId };
+        if (source)
+            query.source = source;
+        if (nature)
+            query.nature = nature;
         const sources = await Source.find({ user: userId });
-        const transactions = await Transaction.find({ user: userId }).sort({ date: -1 }).limit(10).populate('source destination');
+        const transactions = await Transaction.find(query).sort({ date: -1 }).limit(10).populate('source destination');
         // Aggregation for totals (mock for now or simple calc)
         // Let's use simple JS for now to verify.
         let totalIncome = 0;

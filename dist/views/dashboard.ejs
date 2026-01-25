@@ -59,12 +59,12 @@
                                     <%= source.name %>
                                 </strong> <small>(<%= source.type %>)</small>
                                 <% if(source.type==='credit_card' && source.creditLimit> 0) { %>
-                                    <br><small class="text-muted">Available: $<%= (source.creditLimit +
-                                            source.balance).toFixed(2) %> / Limit: $<%= source.creditLimit %></small>
+                                    <br><small class="text-muted">Available: Rs.<%= (source.creditLimit +
+                                            source.balance).toFixed(2) %> / Limit: Rs.<%= source.creditLimit %></small>
                                     <% } %>
                             </div>
                             <span
-                                class="badge <%= source.balance < 0 ? 'bg-warning text-dark' : 'bg-primary' %> rounded-pill">$
+                                class="badge <%= source.balance < 0 ? 'bg-warning text-dark' : 'bg-primary' %> rounded-pill">Rs.
                                 <%= source.balance.toFixed(2) %>
                             </span>
                         </li>
@@ -79,7 +79,26 @@
         <!-- Recent Transactions -->
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">Recent Transactions</div>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span>Recent Transactions</span>
+                    <form action="/dashboard" method="GET" class="d-flex">
+                        <select name="source" class="form-select form-select-sm me-2">
+                            <option value="">All Sources</option>
+                            <% sources.forEach(s => { %>
+                                <option value="<%= s._id %>"><%= s.name %></option>
+                            <% }) %>
+                        </select>
+                        <select name="nature" class="form-select form-select-sm me-2">
+                            <option value="">All Nature</option>
+                            <option value="Fixed">Fixed</option>
+                            <option value="Variable">Variable</option>
+                            <option value="Unwanted">Unwanted</option>
+                            <option value="Others">Others</option>
+                            <option value="Baby Needs">Baby Needs</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-primary">Filter</button>
+                    </form>
+                </div>
                 <ul class="list-group list-group-flush">
                     <% transactions.forEach(trx=> { %>
                         <li class="list-group-item">
@@ -87,9 +106,21 @@
                                 <h6 class="mb-1">
                                     <%= trx.category %>
                                 </h6>
-                                <small class="<%= trx.type === 'income' ? 'text-success' : 'text-danger' %>">
-                                    <%= trx.type==='income' ? '+' : '-' %>$<%= trx.amount.toFixed(2) %>
-                                </small>
+                                <div class="text-end">
+                                    <small class="<%= trx.type === 'income' ? 'text-success' : 'text-danger' %>">
+                                        <%= trx.type==='income' ? '+' : '-' %>Rs.<%= trx.amount.toFixed(2) %>
+                                    </small>
+                                    <div class="btn-group btn-group-sm ms-2">
+                                        <a href="/transactions/edit/<%= trx._id %>" class="btn btn-outline-secondary btn-sm" title="Edit">
+                                            <i class="fas fa-edit">Edit</i>
+                                        </a>
+                                        <form action="/transactions/delete/<%= trx._id %>" method="POST" class="d-inline" onsubmit="return confirm('Delete this transaction?');">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete">
+                                                <i class="fas fa-trash">Del</i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                             <p class="mb-1 small">
                                 <%= trx.description %>

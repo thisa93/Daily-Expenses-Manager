@@ -8,6 +8,6 @@ const TransactionSchema = new Schema({
     description: { type: String },
     source: { type: Schema.Types.ObjectId, ref: 'Source' },
     destination: { type: Schema.Types.ObjectId, ref: 'Source' },
-    nature: { type: String, enum: ['Fixed', 'Variable', 'Unwanted', 'Others'] }
+    nature: { type: String, enum: ['Fixed', 'Variable', 'Unwanted', 'Others', 'Baby Needs'] }
 }, { timestamps: true });
 export default mongoose.model('Transaction', TransactionSchema);
