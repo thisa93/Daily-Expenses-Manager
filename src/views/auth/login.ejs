@@ -1,30 +1,57 @@
 <%- include('../partials/header') %>
 
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h3 class="card-title text-center">Login</h3>
+    <div class="row justify-content-center" style="min-height: 70vh; align-items: center;">
+        <div class="col-md-5">
+            <div class="card shadow-lg" style="border-radius: 1rem; overflow: hidden;">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <i class="fas fa-lock-open"
+                                style="font-size: 3rem; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        </div>
+                        <h3 class="card-title fw-bold">Welcome Back</h3>
+                        <p class="text-muted">Sign in to continue to your account</p>
+                    </div>
+
                     <% if (error) { %>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger animate-fade-in">
+                            <i class="fas fa-exclamation-circle me-2"></i>
                             <%= error %>
                         </div>
                         <% } %>
+
                             <form action="/auth/login" method="POST">
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
+                                <div class="mb-4">
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope me-2"></i>Email Address
+                                    </label>
+                                    <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                        placeholder="Enter your email" required>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+
+                                <div class="mb-4">
+                                    <label for="password" class="form-label">
+                                        <i class="fas fa-key me-2"></i>Password
+                                    </label>
+                                    <input type="password" class="form-control form-control-lg" id="password"
+                                        name="password" placeholder="Enter your password" required>
                                 </div>
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary">Login</button>
+
+                                <div class="d-grid mb-3">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                                    </button>
                                 </div>
                             </form>
-                            <div class="mt-3 text-center">
-                                <p>Don't have an account? <a href="/auth/register">Register</a></p>
+
+                            <div class="text-center mt-4">
+                                <p class="text-muted mb-0">
+                                    Don't have an account?
+                                    <a href="/auth/register" class="text-decoration-none fw-bold"
+                                        style="color: var(--primary-color);">
+                                        Create Account
+                                    </a>
+                                </p>
                             </div>
                 </div>
             </div>

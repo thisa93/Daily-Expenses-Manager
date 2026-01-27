@@ -1,35 +1,65 @@
 <%- include('../partials/header') %>
 
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h3 class="card-title text-center">Register</h3>
+    <div class="row justify-content-center" style="min-height: 70vh; align-items: center;">
+        <div class="col-md-5">
+            <div class="card shadow-lg" style="border-radius: 1rem; overflow: hidden;">
+                <div class="card-body p-5">
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <i class="fas fa-user-plus"
+                                style="font-size: 3rem; background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        </div>
+                        <h3 class="card-title fw-bold">Create Account</h3>
+                        <p class="text-muted">Join us to manage your expenses</p>
+                    </div>
+
                     <% if (error) { %>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger animate-fade-in">
+                            <i class="fas fa-exclamation-circle me-2"></i>
                             <%= error %>
                         </div>
                         <% } %>
+
                             <form action="/auth/register" method="POST">
                                 <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <label for="username" class="form-label">
+                                        <i class="fas fa-user me-2"></i>Username
+                                    </label>
+                                    <input type="text" class="form-control form-control-lg" id="username"
+                                        name="username" placeholder="Choose a username" required>
                                 </div>
 
-                                <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary">Register</button>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">
+                                        <i class="fas fa-envelope me-2"></i>Email Address
+                                    </label>
+                                    <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                        placeholder="Enter your email" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="password" class="form-label">
+                                        <i class="fas fa-key me-2"></i>Password
+                                    </label>
+                                    <input type="password" class="form-control form-control-lg" id="password"
+                                        name="password" placeholder="Create a password" required>
+                                </div>
+
+                                <div class="d-grid mb-3">
+                                    <button type="submit" class="btn btn-success btn-lg">
+                                        <i class="fas fa-user-plus me-2"></i>Create Account
+                                    </button>
                                 </div>
                             </form>
-                            <div class="mt-3 text-center">
-                                <p>Already have an account? <a href="/auth/login">Login</a></p>
+
+                            <div class="text-center mt-4">
+                                <p class="text-muted mb-0">
+                                    Already have an account?
+                                    <a href="/auth/login" class="text-decoration-none fw-bold"
+                                        style="color: var(--success-color);">
+                                        Sign In
+                                    </a>
+                                </p>
                             </div>
                 </div>
             </div>

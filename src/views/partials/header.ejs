@@ -4,46 +4,563 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Expense Manager</title>
+    <title>Daily Expense Manager - Professional Finance Tracking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #f8f9fa;
+        :root {
+            /* Material Design Color Palette */
+            --md-primary: #0061f2;
+            --md-primary-dark: #0050d4;
+            --md-primary-light: #e3f2fd;
+            --md-secondary: #6900c7;
+            --md-success: #00ac69;
+            --md-success-light: #e8f5e9;
+            --md-danger: #e81500;
+            --md-danger-light: #ffebee;
+            --md-warning: #f4a100;
+            --md-warning-light: #fff3e0;
+            --md-info: #00cfd5;
+            --md-info-light: #e0f7fa;
+
+            /* Gradients - More Subtle */
+            --primary-gradient: linear-gradient(135deg, #0061f2 0%, #0050d4 100%);
+            --success-gradient: linear-gradient(135deg, #00ac69 0%, #00875a 100%);
+            --danger-gradient: linear-gradient(135deg, #e81500 0%, #c41200 100%);
+            --warning-gradient: linear-gradient(135deg, #f4a100 0%, #d18900 100%);
+            --info-gradient: linear-gradient(135deg, #00cfd5 0%, #00a8ad 100%);
+
+            /* Background Colors */
+            --bg-primary: #f2f6fc;
+            --bg-secondary: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-dark: #212832;
+
+            /* Text Colors */
+            --text-primary: #212832;
+            --text-secondary: #69707a;
+            --text-muted: #a7aeb8;
+            --text-white: #ffffff;
+
+            /* Material Design Elevation Shadows */
+            --elevation-0: none;
+            --elevation-1: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            --elevation-2: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+            --elevation-3: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --elevation-4: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.35rem;
+            --radius-lg: 0.5rem;
+            --radius-xl: 0.75rem;
+
+            /* Transitions */
+            --transition-fast: 0.15s ease-in-out;
+            --transition-base: 0.25s ease-in-out;
+            --transition-slow: 0.35s ease-in-out;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+            font-size: 0.9375rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: 2.25rem;
+        }
+
+        h2 {
+            font-size: 1.875rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+        }
+
+        h5 {
+            font-size: 1.125rem;
+        }
+
+        h6 {
+            font-size: 1rem;
+        }
+
+        /* Card Styles - Material Design */
         .card {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--elevation-1);
+            transition: all var(--transition-base);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .card:hover {
+            box-shadow: var(--elevation-2);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.0875);
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-footer {
+            background: transparent;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1rem 1.5rem;
+        }
+
+        /* Gradient Cards */
+        .gradient-card {
+            position: relative;
+            color: white;
+            overflow: hidden;
+        }
+
+        .gradient-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.3), transparent);
+        }
+
+        /* Button Styles - Material Design */
+        .btn {
+            font-weight: 500;
+            padding: 0.5rem 1.25rem;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
             border: none;
+            font-size: 0.875rem;
+            text-transform: none;
+            box-shadow: var(--elevation-1);
+        }
+
+        .btn:hover {
+            box-shadow: var(--elevation-2);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: var(--elevation-1);
         }
 
         .btn-primary {
-            background-color: #0d6efd;
-            border-color: #0d6efd;
+            background: var(--md-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--md-primary-dark);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--md-success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #00875a;
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--md-danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c41200;
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--md-warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d18900;
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--md-info);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background: #00a8ad;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--text-secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--text-primary);
+            color: white;
+        }
+
+        .btn-outline-primary {
+            border: 1px solid var(--md-primary);
+            color: var(--md-primary);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--md-primary);
+            color: white;
+            border-color: var(--md-primary);
+        }
+
+        .btn-outline-secondary {
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .btn-outline-secondary:hover {
+            background: var(--text-secondary);
+            color: white;
+            border-color: var(--text-secondary);
+        }
+
+        .btn-outline-danger {
+            border: 1px solid var(--md-danger);
+            color: var(--md-danger);
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .btn-outline-danger:hover {
+            background: var(--md-danger);
+            color: white;
+            border-color: var(--md-danger);
+        }
+
+        /* Form Styles - Material Design */
+        .form-control,
+        .form-select {
+            border: 1px solid #d4dae3;
+            border-radius: var(--radius-md);
+            padding: 0.625rem 0.875rem;
+            transition: all var(--transition-base);
+            background: white;
+            font-size: 0.875rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--md-primary);
+            box-shadow: 0 0 0 0.2rem rgba(0, 97, 242, 0.1);
+            outline: none;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 0.375rem;
+            font-size: 0.875rem;
+        }
+
+        .form-control-lg,
+        .form-select-lg {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+        }
+
+        /* Navbar Styles - Material Design */
+        .navbar {
+            background: var(--md-primary) !important;
+            padding: 0;
+            box-shadow: var(--elevation-2);
+            min-height: 56px;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: white !important;
+            transition: all var(--transition-base);
+            padding: 0.875rem 0;
+        }
+
+        .navbar-brand:hover {
+            opacity: 0.9;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 500;
+            padding: 1rem 0.875rem !important;
+            margin: 0;
+            transition: all var(--transition-base);
+            position: relative;
+            font-size: 0.875rem;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white !important;
+            border-bottom-color: white;
+        }
+
+        /* Badge Styles */
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+        }
+
+        /* List Group */
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1.25rem 1.5rem;
+            transition: all var(--transition-base);
+        }
+
+        .list-group-item:hover {
+            background: rgba(102, 126, 234, 0.03);
+            transform: translateX(5px);
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Alert Styles */
+        .alert {
+            border: none;
+            border-radius: var(--radius-lg);
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, rgba(235, 51, 73, 0.1) 0%, rgba(244, 92, 67, 0.1) 100%);
+            color: #c53030;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, rgba(17, 153, 142, 0.1) 0%, rgba(56, 239, 125, 0.1) 100%);
+            color: #276749;
+            border-left: 4px solid var(--success-color);
+        }
+
+        /* Utility Classes */
+        .text-gradient {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease;
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.5s ease;
+        }
+
+        /* Container */
+        .container {
+            animation: fadeIn 0.6s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">Expense Manager</a>
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-wallet me-2"></i>Expense Manager
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <% if (locals.user) { %>
-                        <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/dashboard">
+                                <i class="fas fa-chart-line me-1"></i>Dashboard
+                            </a>
+                        </li>
                         <% if (locals.isAdmin) { %>
-                            <li class="nav-item"><a class="nav-link" href="/admin/dashboard">Admin</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin/dashboard">
+                                    <i class="fas fa-user-shield me-1"></i>Admin
+                                </a>
+                            </li>
                             <% } %>
-                                <li class="nav-item"><a class="nav-link" href="/auth/logout">Logout</a></li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/auth/logout">
+                                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                                    </a>
+                                </li>
                                 <% } else { %>
-                                    <li class="nav-item"><a class="nav-link" href="/auth/login">Login</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="/auth/register">Register</a></li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/auth/login">
+                                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/auth/register">
+                                            <i class="fas fa-user-plus me-1"></i>Register
+                                        </a>
+                                    </li>
                                     <% } %>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="container">
+    <div class="container mt-4">
