@@ -15,6 +15,14 @@
                                 </option>
                                 <option value="transfer" <%=transaction.type==='transfer' ? 'selected' : '' %>>Transfer
                                 </option>
+                                <option value="borrow" <%=transaction.type==='borrow' ? 'selected' : '' %>>Borrow (Lend
+                                    from someone)</option>
+                                <option value="repayment" <%=transaction.type==='repayment' ? 'selected' : '' %>
+                                    >Repayment (Pay back)</option>
+                                <option value="lend" <%=transaction.type==='lend' ? 'selected' : '' %>>Given Loan (Lend
+                                    to someone)</option>
+                                <option value="loan_repayment" <%=transaction.type==='loan_repayment' ? 'selected' : ''
+                                    %>>Loan Repayment (Received)</option>
                             </select>
                         </div>
 
@@ -50,6 +58,24 @@
                                 <option value="Baby Needs" <%=transaction.nature==='Baby Needs' ? 'selected' : '' %>
                                     >Baby Needs</option>
                             </select>
+                        </div>
+
+                        <div class="mb-3 d-none" id="lenderField">
+                            <label class="form-label">Lender Name</label>
+                            <input type="text" class="form-control" name="lender" placeholder="Person Name"
+                                value="<%= transaction.lender || '' %>">
+                        </div>
+
+                        <div class="mb-3 d-none" id="borrowerField">
+                            <label class="form-label">Borrower Name (Person taking loan)</label>
+                            <input type="text" class="form-control" name="borrower" placeholder="Person Name"
+                                value="<%= transaction.borrower || '' %>">
+                        </div>
+
+                        <div class="mb-3 d-none" id="dueDateField">
+                            <label class="form-label">Due Date (Optional)</label>
+                            <input type="date" class="form-control" name="dueDate"
+                                value="<%= transaction.dueDate ? new Date(transaction.dueDate).toISOString().split('T')[0] : '' %>">
                         </div>
 
                         <!-- Source (From) -->
@@ -99,24 +125,41 @@
             const destinationField = document.getElementById('destinationField');
             const sourceLabel = document.getElementById('sourceLabel');
             const categoryField = document.getElementById('categoryField');
-            const categoryInput = categoryField.querySelector('input');
+
+            const lenderField = document.getElementById('lenderField');
+            const borrowerField = document.getElementById('borrowerField');
+            const dueDateField = document.getElementById('dueDateField');
+
+            // Reset all visibilities first
+            natureField.classList.add('d-none');
+            destinationField.classList.add('d-none');
+            lenderField.classList.add('d-none');
+            borrowerField.classList.add('d-none');
+            dueDateField.classList.add('d-none');
+            categoryField.classList.remove('d-none');
 
             if (type === 'expense') {
                 natureField.classList.remove('d-none');
-                destinationField.classList.add('d-none');
                 sourceLabel.innerText = "Paid Via (Source)";
-                categoryField.classList.remove('d-none');
             } else if (type === 'income') {
-                natureField.classList.add('d-none');
-                destinationField.classList.add('d-none');
                 sourceLabel.innerText = "Deposit To (Source)";
-                categoryField.classList.remove('d-none');
             } else if (type === 'transfer') {
-                natureField.classList.add('d-none');
                 destinationField.classList.remove('d-none');
                 sourceLabel.innerText = "From Account";
-                categoryField.classList.add('d-none'); // Optional for transfer? Or default?
-                // categoryInput.value = "Transfer"; // Don't auto-set on edit to preserve if was set
+                categoryField.classList.add('d-none');
+            } else if (type === 'borrow') {
+                lenderField.classList.remove('d-none');
+                dueDateField.classList.remove('d-none');
+                sourceLabel.innerText = "Deposit To (Source)";
+            } else if (type === 'repayment') {
+                lenderField.classList.remove('d-none');
+                sourceLabel.innerText = "Paid Via (Source)";
+            } else if (type === 'lend') {
+                borrowerField.classList.remove('d-none');
+                sourceLabel.innerText = "Paid Via (Source)";
+            } else if (type === 'loan_repayment') {
+                borrowerField.classList.remove('d-none');
+                sourceLabel.innerText = "Deposit To (Source)";
             }
         }
         // Init

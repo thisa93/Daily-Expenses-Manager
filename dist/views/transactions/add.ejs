@@ -12,6 +12,10 @@
                                 <option value="expense">Expense</option>
                                 <option value="income">Income</option>
                                 <option value="transfer">Transfer</option>
+                                <option value="borrow">Borrow (Lend from someone)</option>
+                                <option value="repayment">Repayment (Pay back)</option>
+                                <option value="lend">Given Loan (Lend to someone)</option>
+                                <option value="loan_repayment">Loan Repayment (Received)</option>
                             </select>
                         </div>
 
@@ -28,8 +32,17 @@
 
                         <div class="mb-3" id="categoryField">
                             <label class="form-label">Category</label>
-                            <input type="text" class="form-control" name="category" placeholder="Food, Salary, etc."
-                                required>
+                            <select class="form-select" id="categorySelect" onchange="checkCategory(this)">
+                                <option value="" disabled selected>Select Category</option>
+                                <% categories.forEach(cat=> { %>
+                                    <option value="<%= cat.name %>" data-type="<%= cat.type %>">
+                                        <%= cat.name %>
+                                    </option>
+                                    <% }) %>
+                                        <option value="Other">Other...</option>
+                            </select>
+                            <input type="text" class="form-control mt-2" id="categoryInput" name="category"
+                                placeholder="Enter category" style="display: none;">
                         </div>
 
                         <div class="mb-3" id="natureField">
@@ -41,6 +54,21 @@
                                 <option value="Others">Others</option>
                                 <option value="Baby Needs">Baby Needs</option>
                             </select>
+                        </div>
+
+                        <div class="mb-3 d-none" id="lenderField">
+                            <label class="form-label">Lender Name</label>
+                            <input type="text" class="form-control" name="lender" placeholder="Person Name">
+                        </div>
+
+                        <div class="mb-3 d-none" id="borrowerField">
+                            <label class="form-label">Borrower Name (Person taking loan)</label>
+                            <input type="text" class="form-control" name="borrower" placeholder="Person Name">
+                        </div>
+
+                        <div class="mb-3 d-none" id="dueDateField">
+                            <label class="form-label">Due Date (Optional)</label>
+                            <input type="date" class="form-control" name="dueDate">
                         </div>
 
                         <!-- Source (From) -->
@@ -67,6 +95,12 @@
                             </select>
                         </div>
 
+                        <div class="mb-3 d-none" id="transferFeeField">
+                            <label class="form-label">Transfer Fee</label>
+                            <input type="number" step="0.01" class="form-control" name="transferFee"
+                                placeholder="Fee amount">
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label">Description</label>
                             <input type="text" class="form-control" name="description">
@@ -87,25 +121,90 @@
             const destinationField = document.getElementById('destinationField');
             const sourceLabel = document.getElementById('sourceLabel');
             const categoryField = document.getElementById('categoryField');
-            const categoryInput = categoryField.querySelector('input');
+            const categoryInput = document.getElementById('categoryInput');
+            const categorySelect = document.getElementById('categorySelect');
+            const lenderField = document.getElementById('lenderField');
+            const borrowerField = document.getElementById('borrowerField');
+            const dueDateField = document.getElementById('dueDateField');
+            const transferFeeField = document.getElementById('transferFeeField');
 
+            // Reset all visibilities
+            natureField.classList.add('d-none');
+            destinationField.classList.add('d-none');
+            lenderField.classList.add('d-none');
+            borrowerField.classList.add('d-none');
+            dueDateField.classList.add('d-none');
+            transferFeeField.classList.add('d-none');
+            categoryField.classList.remove('d-none');
+
+            // Logic
             if (type === 'expense') {
                 natureField.classList.remove('d-none');
-                destinationField.classList.add('d-none');
                 sourceLabel.innerText = "Paid Via (Source)";
-                categoryField.classList.remove('d-none');
+                filterCategories('expense');
             } else if (type === 'income') {
-                natureField.classList.add('d-none');
-                destinationField.classList.add('d-none');
                 sourceLabel.innerText = "Deposit To (Source)";
-                categoryField.classList.remove('d-none');
+                filterCategories('income');
             } else if (type === 'transfer') {
-                natureField.classList.add('d-none');
                 destinationField.classList.remove('d-none');
+                transferFeeField.classList.remove('d-none');
                 sourceLabel.innerText = "From Account";
-                categoryField.classList.add('d-none'); // Optional for transfer? Or default?
-                categoryInput.value = "Transfer"; // Auto-set
+                categoryField.classList.add('d-none');
+                categoryInput.value = "Transfer";
+            } else if (type === 'borrow') {
+                lenderField.classList.remove('d-none');
+                dueDateField.classList.remove('d-none');
+                sourceLabel.innerText = "Deposit To (Source)";
+                categoryInput.value = "Loan/Debt";
+            } else if (type === 'repayment') {
+                lenderField.classList.remove('d-none');
+                sourceLabel.innerText = "Paid Via (Source)";
+                categoryInput.value = "Debt Repayment";
+            } else if (type === 'lend') {
+                borrowerField.classList.remove('d-none');
+                sourceLabel.innerText = "Paid Via (Source)";
+                categoryInput.value = "Given Loan";
+            } else if (type === 'loan_repayment') {
+                borrowerField.classList.remove('d-none');
+                sourceLabel.innerText = "Deposit To (Source)";
+                categoryInput.value = "Received Payment";
             }
+        }
+
+        function checkCategory(select) {
+            const input = document.getElementById('categoryInput');
+            if (select.value === 'Other') {
+                input.style.display = 'block';
+                input.value = '';
+                input.required = true;
+                input.focus();
+            } else {
+                input.style.display = 'none';
+                input.value = select.value;
+                input.required = true; // Still required, holds value
+            }
+        }
+
+        function filterCategories(type) {
+            const select = document.getElementById('categorySelect');
+            const options = select.options;
+            let found = false;
+            for (let i = 0; i < options.length; i++) {
+                const opt = options[i];
+                if (opt.value === 'Other' || opt.value === '') {
+                    opt.style.display = 'block';
+                } else {
+                    const catType = opt.getAttribute('data-type');
+                    if (catType === type) {
+                        opt.style.display = 'block';
+                        found = true;
+                    } else {
+                        opt.style.display = 'none';
+                    }
+                }
+            }
+            select.selectedIndex = 0;
+            checkCategory(select);
         }
         // Init
         toggleFields();

@@ -15,4 +15,8 @@ router.post('/edit/:id', protect, updateTransaction);
 // Delete Transaction Route
 router.post('/delete/:id', protect, deleteTransaction);
 
+// Month End Report Route
+import { renderMonthEndReport } from '../controllers/transactionController.js';
+router.get('/month-end-report', protect, renderMonthEndReport);
+
 export default router;

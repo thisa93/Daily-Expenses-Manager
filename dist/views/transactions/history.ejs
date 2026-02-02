@@ -56,19 +56,16 @@
                             </select>
                         </div>
                         <div class="col-auto">
-                            <select name="type" class="form-select form-select-sm" onchange="this.form.submit()">
-                                <option value="">All Types</option>
-                                <option value="income" <%=query.type==='income' ? 'selected' : '' %>>Income</option>
-                                <option value="expense" <%=query.type==='expense' ? 'selected' : '' %>>Expense</option>
-                                <option value="transfer" <%=query.type==='transfer' ? 'selected' : '' %>>Transfer
+                            <select name="nature" class="form-select form-select-sm" onchange="this.form.submit()">
+                                <option value="">All Nature</option>
+                                <option value="Fixed" <%=query.nature==='Fixed' ? 'selected' : '' %>>Fixed</option>
+                                <option value="Variable" <%=query.nature==='Variable' ? 'selected' : '' %>>Variable
                                 </option>
-                                <option value="lend" <%=query.type==='lend' ? 'selected' : '' %>>Lend (Given)</option>
-                                <option value="borrow" <%=query.type==='borrow' ? 'selected' : '' %>>Borrow (Taken)
+                                <option value="Unwanted" <%=query.nature==='Unwanted' ? 'selected' : '' %>>Unwanted
                                 </option>
-                                <option value="loan_repayment" <%=query.type==='loan_repayment' ? 'selected' : '' %>
-                                    >Loan Repayment (Received)</option>
-                                <option value="repayment" <%=query.type==='repayment' ? 'selected' : '' %>>Repayment
-                                    (Paid)</option>
+                                <option value="Others" <%=query.nature==='Others' ? 'selected' : '' %>>Others</option>
+                                <option value="Baby Needs" <%=query.nature==='Baby Needs' ? 'selected' : '' %>>Baby
+                                    Needs</option>
                             </select>
                         </div>
                         <div class="col-auto">
@@ -106,7 +103,6 @@
             }, 500); // 500ms delay
         }
     </script>
-
 
     <!-- Transaction List -->
     <div class="row">

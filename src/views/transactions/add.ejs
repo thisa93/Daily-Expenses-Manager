@@ -14,6 +14,8 @@
                                 <option value="transfer">Transfer</option>
                                 <option value="borrow">Borrow (Lend from someone)</option>
                                 <option value="repayment">Repayment (Pay back)</option>
+                                <option value="lend">Given Loan (Lend to someone)</option>
+                                <option value="loan_repayment">Loan Repayment (Received)</option>
                             </select>
                         </div>
 
@@ -57,6 +59,19 @@
                         <div class="mb-3 d-none" id="lenderField">
                             <label class="form-label">Lender Name</label>
                             <input type="text" class="form-control" name="lender" placeholder="Person Name">
+                        </div>
+
+                        <div class="mb-3 d-none" id="borrowerField">
+                            <label class="form-label">Borrower Name (Person taking loan)</label>
+                            <input type="text" class="form-control" name="borrower" placeholder="Person Name"
+                                list="borrowerList">
+                            <datalist id="borrowerList">
+                                <% if (typeof borrowers !=='undefined' ) { %>
+                                    <% borrowers.forEach(b=> { %>
+                                        <option value="<%= b %>"></option>
+                                        <% }) %>
+                                            <% } %>
+                            </datalist>
                         </div>
 
                         <div class="mb-3 d-none" id="dueDateField">
@@ -117,6 +132,7 @@
             const categoryInput = document.getElementById('categoryInput');
             const categorySelect = document.getElementById('categorySelect');
             const lenderField = document.getElementById('lenderField');
+            const borrowerField = document.getElementById('borrowerField');
             const dueDateField = document.getElementById('dueDateField');
             const transferFeeField = document.getElementById('transferFeeField');
 
@@ -124,6 +140,7 @@
             natureField.classList.add('d-none');
             destinationField.classList.add('d-none');
             lenderField.classList.add('d-none');
+            borrowerField.classList.add('d-none');
             dueDateField.classList.add('d-none');
             transferFeeField.classList.add('d-none');
             categoryField.classList.remove('d-none');
@@ -151,6 +168,14 @@
                 lenderField.classList.remove('d-none');
                 sourceLabel.innerText = "Paid Via (Source)";
                 categoryInput.value = "Debt Repayment";
+            } else if (type === 'lend') {
+                borrowerField.classList.remove('d-none');
+                sourceLabel.innerText = "Paid Via (Source)";
+                categoryInput.value = "Given Loan";
+            } else if (type === 'loan_repayment') {
+                borrowerField.classList.remove('d-none');
+                sourceLabel.innerText = "Deposit To (Source)";
+                categoryInput.value = "Received Payment";
             }
         }
 

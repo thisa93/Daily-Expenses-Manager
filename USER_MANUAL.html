@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Expenses Manager - User Manual</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 12px;
+            margin: 40px 0 20px 0;
+            font-size: 2.5em;
+            page-break-after: avoid;
+        }
+
+        h1:first-of-type {
+            margin-top: 0;
+            text-align: center;
+            font-size: 3em;
+            color: #3498db;
+        }
+
+        h2 {
+            color: #34495e;
+            border-bottom: 3px solid #95a5a6;
+            padding-bottom: 10px;
+            margin: 35px 0 15px 0;
+            font-size: 2em;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            color: #555;
+            margin: 25px 0 12px 0;
+            font-size: 1.5em;
+            page-break-after: avoid;
+        }
+
+        h4 {
+            color: #666;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+            page-break-after: avoid;
+        }
+
+        p {
+            margin: 12px 0;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 40px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+
+        pre {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border-left: 5px solid #3498db;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+
+        blockquote {
+            border-left: 5px solid #3498db;
+            padding: 15px 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            font-style: italic;
+            color: #555;
+            page-break-inside: avoid;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 25px 0;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        hr {
+            border: none;
+            border-top: 3px solid #ddd;
+            margin: 40px 0;
+        }
+
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        em {
+            font-style: italic;
+            color: #555;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: 2px solid #3498db;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            border: none;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+
+        .toc li {
+            margin: 10px 0;
+        }
+
+        .note {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+
+        .warning {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+
+        .tip {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+
+        @media print {
+            body {
+                padding: 20px;
+                max-width: 100%;
+            }
+
+            h1, h2, h3, h4 {
+                page-break-after: avoid;
+            }
+
+            table, pre, blockquote {
+                page-break-inside: avoid;
+            }
+
+            a {
+                color: #000;
+                text-decoration: none;
+            }
+
+            .no-print {
+                display: none;
+            }
+        }
+
+        .header-info {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .header-info h1 {
+            color: white;
+            border: none;
+            margin: 0;
+        }
+
+        .header-info p {
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+        }
+
+        .section {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-info">
+        <h1>Daily Expenses Manager</h1>
+        <p>User Manual - Version 1.0.0</p>
+        <p>Last Updated: January 2026</p>
+    </div>
+
+    <div class="toc">
+        <h2>Table of Contents</h2>
+        <ul>
+            <li><a href="#introduction">1. Introduction</a></li>
+            <li><a href="#getting-started">2. Getting Started</a></li>
+            <li><a href="#user-roles">3. User Roles</a></li>
+            <li><a href="#features-overview">4. Features Overview</a></li>
+            <li><a href="#user-guide">5. User Guide</a></li>
+            <li><a href="#admin-guide">6. Admin Guide</a></li>
+            <li><a href="#troubleshooting">7. Troubleshooting</a></li>
+            <li><a href="#faq">8. FAQ</a></li>
+        </ul>
+    </div>
+
+    <section class="section" id="introduction">
+        <h1>1. Introduction</h1>
+
+        <h2>What is Daily Expenses Manager?</h2>
+        <p>Daily Expenses Manager is a comprehensive web-based financial management application designed to help individuals and families track their income, expenses, and overall financial health. The application provides powerful tools for managing multiple accounts, categorizing transactions, and visualizing financial data through interactive dashboards.</p>
+
+        <h2>Key Features</h2>
+        <ul>
+            <li><strong>Multi-Account Management</strong>: Track multiple bank accounts, cash, and credit cards</li>
+            <li><strong>Transaction Tracking</strong>: Record income, expenses, transfers, borrowings, and repayments</li>
+            <li><strong>Financial Dashboard</strong>: Visual overview of your financial status with charts and summaries</li>
+            <li><strong>Expense Categorization</strong>: Organize expenses by nature (Fixed, Variable, Unwanted, Others, Baby Needs)</li>
+            <li><strong>Filtering & Reporting</strong>: Advanced filtering by date range, source, and nature</li>
+            <li><strong>User Management</strong>: Admin controls for managing multiple users</li>
+            <li><strong>Secure Authentication</strong>: Password-protected accounts with session management</li>
+        </ul>
+    </section>
+
+    <section class="section" id="getting-started">
+        <h1>2. Getting Started</h1>
+
+        <h2>System Requirements</h2>
+        <ul>
+            <li><strong>Web Browser</strong>: Modern web browser (Chrome, Firefox, Safari, Edge)</li>
+            <li><strong>Internet Connection</strong>: Required for accessing the application</li>
+            <li><strong>JavaScript</strong>: Must be enabled in your browser</li>
+        </ul>
+
+        <h2>First-Time Setup</h2>
+
+        <h3>1. Registration</h3>
+        <ol>
+            <li>Navigate to the application URL</li>
+            <li>Click on <strong>"Register"</strong> or <strong>"Sign Up"</strong></li>
+            <li>Fill in the registration form:
+                <ul>
+                    <li><strong>Username</strong>: Your display name</li>
+                    <li><strong>Email</strong>: Valid email address (used for login)</li>
+                    <li><strong>Password</strong>: Secure password (minimum requirements apply)</li>
+                </ul>
+            </li>
+            <li>Click <strong>"Register"</strong> to create your account</li>
+            <li>You will be automatically logged in after successful registration</li>
+        </ol>
+
+        <h3>2. Initial Login</h3>
+        <ol>
+            <li>Go to the login page</li>
+            <li>Enter your <strong>email</strong> and <strong>password</strong></li>
+            <li>Click <strong>"Login"</strong></li>
+            <li>You will be redirected to your dashboard</li>
+        </ol>
+
+        <div class="warning">
+            <strong>Default Admin Account:</strong><br>
+            Email: <code>admin@admin.com</code><br>
+            Password: <code>admin@123</code><br>
+            <strong>Important:</strong> Change this password immediately after first login!
+        </div>
+    </section>
+
+    <section class="section" id="user-roles">
+        <h1>3. User Roles</h1>
+
+        <h2>Regular User</h2>
+        <p>Regular users can:</p>
+        <ul>
+            <li>View their personal dashboard</li>
+            <li>Add, edit, and delete transactions</li>
+            <li>Manage their accounts (sources)</li>
+            <li>Filter and view transaction history</li>
+            <li>Track income, expenses, and balances</li>
+        </ul>
+
+        <h2>Administrator</h2>
+        <p>Administrators have all user privileges plus:</p>
+        <ul>
+            <li>Access to admin dashboard</li>
+            <li>View all users in the system</li>
+            <li>Add new admin users</li>
+            <li>Manage system-wide settings</li>
+            <li>View aggregated financial data</li>
+        </ul>
+    </section>
+
+    <section class="section" id="features-overview">
+        <h1>4. Features Overview</h1>
+
+        <h2>Dashboard</h2>
+        <p>The dashboard is your financial command center, displaying:</p>
+
+        <h3>Summary Cards</h3>
+        <ul>
+            <li><strong>Total Income</strong> (green): Sum of all income and borrowed amounts</li>
+            <li><strong>Total Expense</strong> (red): Sum of all expenses and repayments</li>
+            <li><strong>Outstanding Debt</strong> (orange): Total amount still owed</li>
+            <li><strong>Total Balance</strong> (blue): Combined balance across all accounts</li>
+        </ul>
+
+        <h3>Other Dashboard Components</h3>
+        <ul>
+            <li><strong>Account Balances</strong>: List of all your accounts with current balances</li>
+            <li><strong>Recent Transactions</strong>: Latest financial activities with filtering options</li>
+            <li><strong>Financial Overview Chart</strong>: Visual representation of income vs. expenses</li>
+        </ul>
+
+        <h2>Transaction Types</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Use Case</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Income</strong></td>
+                    <td>Money received</td>
+                    <td>Salary, gifts, refunds, etc.</td>
+                </tr>
+                <tr>
+                    <td><strong>Expense</strong></td>
+                    <td>Money spent</td>
+                    <td>Bills, shopping, entertainment, etc.</td>
+                </tr>
+                <tr>
+                    <td><strong>Transfer</strong></td>
+                    <td>Moving money between accounts</td>
+                    <td>Bank to cash, account transfers</td>
+                </tr>
+                <tr>
+                    <td><strong>Borrow</strong></td>
+                    <td>Money borrowed from someone</td>
+                    <td>Loans from friends/family</td>
+                </tr>
+                <tr>
+                    <td><strong>Repayment</strong></td>
+                    <td>Paying back borrowed money</td>
+                    <td>Loan repayments</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Account Types (Sources)</h2>
+        <ol>
+            <li><strong>Bank Account</strong>: Traditional bank accounts</li>
+            <li><strong>Cash</strong>: Physical cash on hand</li>
+            <li><strong>Credit Card</strong>: Credit card accounts with credit limits</li>
+        </ol>
+    </section>
+
+    <section class="section" id="user-guide">
+        <h1>5. User Guide</h1>
+
+        <h2>Managing Accounts (Sources)</h2>
+
+        <h3>Adding a New Account</h3>
+        <ol>
+            <li>From the dashboard, click <strong>"Add Account"</strong> or navigate to <strong>Sources → Add</strong></li>
+            <li>Fill in the account details:
+                <ul>
+                    <li><strong>Name</strong>: Account identifier (e.g., "HDFC Savings", "Wallet Cash")</li>
+                    <li><strong>Type</strong>: Select Bank, Cash, or Credit Card</li>
+                    <li><strong>Initial Balance</strong>: Starting balance</li>
+                    <li><strong>Credit Limit</strong> (for credit cards only): Maximum credit available</li>
+                </ul>
+            </li>
+            <li>Click <strong>"Add Source"</strong> to save</li>
+        </ol>
+
+        <h3>Viewing All Accounts</h3>
+        <ol>
+            <li>Navigate to <strong>"Manage Accounts"</strong> or <strong>Sources</strong></li>
+            <li>View list of all accounts with:
+                <ul>
+                    <li>Account name and type</li>
+                    <li>Current balance</li>
+                    <li>Credit limit (for credit cards)</li>
+                    <li>Action buttons (Edit/Delete)</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Editing an Account</h3>
+        <ol>
+            <li>Go to <strong>Sources</strong> page</li>
+            <li>Click the <strong>Edit</strong> button (pencil icon) next to the account</li>
+            <li>Modify the details</li>
+            <li>Click <strong>"Update Source"</strong> to save changes</li>
+        </ol>
+
+        <h3>Deleting an Account</h3>
+        <ol>
+            <li>Go to <strong>Sources</strong> page</li>
+            <li>Click the <strong>Delete</strong> button (trash icon) next to the account</li>
+            <li>Confirm the deletion</li>
+        </ol>
+        <div class="warning">
+            <strong>Warning:</strong> This action cannot be undone!
+        </div>
+
+        <h2>Managing Transactions</h2>
+
+        <h3>Adding a Transaction</h3>
+        <ol>
+            <li>Click <strong>"Add Transaction"</strong> from the dashboard or navigate to <strong>Transactions → Add</strong></li>
+            <li>Select <strong>Transaction Type</strong></li>
+        </ol>
+
+        <h4>For Income:</h4>
+        <ul>
+            <li><strong>Amount</strong>: Income amount</li>
+            <li><strong>Date</strong>: Transaction date</li>
+            <li><strong>Category</strong>: Income source (Salary, Gift, Refund, etc.)</li>
+            <li><strong>Description</strong>: Optional notes</li>
+            <li><strong>Account</strong>: Which account received the money</li>
+        </ul>
+
+        <h4>For Expense:</h4>
+        <ul>
+            <li><strong>Amount</strong>: Expense amount</li>
+            <li><strong>Date</strong>: Transaction date</li>
+            <li><strong>Category</strong>: Expense type (Food, Transport, Bills, etc.)</li>
+            <li><strong>Description</strong>: Optional notes</li>
+            <li><strong>Account</strong>: Which account paid from</li>
+            <li><strong>Nature</strong>: Classification
+                <ul>
+                    <li><strong>Fixed</strong>: Regular recurring expenses (rent, subscriptions)</li>
+                    <li><strong>Variable</strong>: Fluctuating expenses (groceries, utilities)</li>
+                    <li><strong>Unwanted</strong>: Unnecessary spending</li>
+                    <li><strong>Others</strong>: Miscellaneous</li>
+                    <li><strong>Baby Needs</strong>: Child-related expenses</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h4>For Transfer:</h4>
+        <ul>
+            <li><strong>Amount</strong>: Transfer amount</li>
+            <li><strong>Date</strong>: Transaction date</li>
+            <li><strong>From Account</strong>: Source account</li>
+            <li><strong>To Account</strong>: Destination account</li>
+            <li><strong>Transfer Fee</strong>: Optional fee charged</li>
+            <li><strong>Description</strong>: Optional notes</li>
+        </ul>
+
+        <h4>For Borrow:</h4>
+        <ul>
+            <li><strong>Amount</strong>: Borrowed amount</li>
+            <li><strong>Date</strong>: Borrow date</li>
+            <li><strong>Lender</strong>: Person/institution you borrowed from</li>
+            <li><strong>Due Date</strong>: Repayment deadline</li>
+            <li><strong>Account</strong>: Account where money was deposited</li>
+            <li><strong>Description</strong>: Optional notes</li>
+        </ul>
+
+        <h4>For Repayment:</h4>
+        <ul>
+            <li><strong>Amount</strong>: Repayment amount</li>
+            <li><strong>Date</strong>: Repayment date</li>
+            <li><strong>Lender</strong>: Person/institution you're repaying</li>
+            <li><strong>Account</strong>: Account used for repayment</li>
+            <li><strong>Description</strong>: Optional notes</li>
+        </ul>
+
+        <h3>Viewing Transaction History</h3>
+        <ol>
+            <li>Navigate to <strong>"View Detailed History"</strong> or <strong>Transactions</strong></li>
+            <li>View complete transaction history with:
+                <ul>
+                    <li>Transaction type and category</li>
+                    <li>Amount (color-coded: green for income, red for expense)</li>
+                    <li>Date</li>
+                    <li>Account information</li>
+                    <li>Description</li>
+                    <li>Edit/Delete options</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Filtering Transactions</h3>
+        <p>On the dashboard or transaction history page:</p>
+
+        <h4>1. By Date Range:</h4>
+        <ul>
+            <li>Select <strong>Start Date</strong> and <strong>End Date</strong></li>
+            <li>Transactions will filter automatically</li>
+        </ul>
+
+        <h4>2. By Source:</h4>
+        <ul>
+            <li>Select an account from the <strong>Source</strong> dropdown</li>
+            <li>View transactions for that specific account</li>
+        </ul>
+
+        <h4>3. By Nature (for expenses):</h4>
+        <ul>
+            <li>Select from: Fixed, Variable, Unwanted, Others, Baby Needs</li>
+            <li>View expenses of that classification</li>
+        </ul>
+
+        <h4>4. Filtered Summary:</h4>
+        <ul>
+            <li>View filtered income and expense totals</li>
+            <li>Helps analyze spending patterns</li>
+        </ul>
+
+        <h3>Editing a Transaction</h3>
+        <ol>
+            <li>Find the transaction in your history</li>
+            <li>Click the <strong>Edit</strong> button (pencil icon)</li>
+            <li>Modify the transaction details</li>
+            <li>Click <strong>"Update Transaction"</strong> to save changes</li>
+        </ol>
+
+        <h3>Deleting a Transaction</h3>
+        <ol>
+            <li>Find the transaction in your history</li>
+            <li>Click the <strong>Delete</strong> button (trash icon)</li>
+            <li>Confirm the deletion</li>
+        </ol>
+        <div class="note">
+            <strong>Note:</strong> Account balances will be automatically adjusted
+        </div>
+
+        <h2>Understanding Your Dashboard</h2>
+
+        <h3>Summary Cards</h3>
+        <ul>
+            <li><strong>Total Income</strong>: Sum of all income and borrowed amounts</li>
+            <li><strong>Total Expense</strong>: Sum of all expenses and repayments</li>
+            <li><strong>Outstanding Debt</strong>: Total amount still owed (borrows minus repayments)</li>
+            <li><strong>Total Balance</strong>: Combined balance across all accounts</li>
+        </ul>
+
+        <h3>Account Balances Section</h3>
+        <ul>
+            <li>Lists all your accounts with current balances</li>
+            <li>Credit cards show:
+                <ul>
+                    <li>Current balance (negative if you owe money)</li>
+                    <li>Available credit</li>
+                    <li>Credit limit</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Recent Transactions Section</h3>
+        <ul>
+            <li>Shows latest transactions</li>
+            <li>Includes filtering controls</li>
+            <li>Displays filtered income and expense totals</li>
+            <li>Quick access to edit/delete transactions</li>
+        </ul>
+
+        <h3>Financial Overview Chart</h3>
+        <ul>
+            <li>Bar chart comparing Income, Expense, and Balance</li>
+            <li>Visual representation of financial health</li>
+            <li>Updates based on your transaction data</li>
+        </ul>
+    </section>
+
+    <section class="section" id="admin-guide">
+        <h1>6. Admin Guide</h1>
+
+        <h2>Accessing Admin Features</h2>
+        <ol>
+            <li>Log in with an admin account</li>
+            <li>Navigate to <strong>Admin</strong> section from the menu</li>
+            <li>Access admin dashboard and user management</li>
+        </ol>
+
+        <h2>Admin Dashboard</h2>
+        <p>The admin dashboard displays:</p>
+        <ul>
+            <li>Total number of users in the system</li>
+            <li>System-wide statistics</li>
+            <li>Quick access to user management</li>
+        </ul>
+
+        <h2>Managing Users</h2>
+
+        <h3>Viewing All Users</h3>
+        <ol>
+            <li>Go to <strong>Admin → Dashboard</strong></li>
+            <li>View list of all registered users with:
+                <ul>
+                    <li>Username</li>
+                    <li>Email</li>
+                    <li>Role (User/Admin)</li>
+                    <li>Status (Active/Inactive)</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h3>Adding a New Admin</h3>
+        <ol>
+            <li>Navigate to <strong>Admin → Add Admin</strong></li>
+            <li>Fill in the form:
+                <ul>
+                    <li><strong>Username</strong>: Admin's display name</li>
+                    <li><strong>Email</strong>: Admin's email address</li>
+                    <li><strong>Password</strong>: Secure password</li>
+                </ul>
+            </li>
+            <li>Click <strong>"Add Admin"</strong> to create the account</li>
+            <li>New admin will have full administrative privileges</li>
+        </ol>
+
+        <h2>Best Practices for Admins</h2>
+        <ul>
+            <li><strong>Regular Backups</strong>: Ensure database backups are performed regularly</li>
+            <li><strong>User Monitoring</strong>: Periodically review user accounts for inactive users</li>
+            <li><strong>Security</strong>: Change default admin password immediately</li>
+            <li><strong>Access Control</strong>: Only grant admin privileges to trusted individuals</li>
+        </ul>
+    </section>
+
+    <section class="section" id="troubleshooting">
+        <h1>7. Troubleshooting</h1>
+
+        <h2>Common Issues</h2>
+
+        <h3>Cannot Log In</h3>
+        <p><strong>Problem:</strong> Login fails with correct credentials</p>
+        <p><strong>Solutions:</strong></p>
+        <ol>
+            <li>Verify email and password are correct</li>
+            <li>Check if Caps Lock is on</li>
+            <li>Clear browser cache and cookies</li>
+            <li>Try a different browser</li>
+            <li>Contact admin if account is locked</li>
+        </ol>
+
+        <h3>Transactions Not Showing</h3>
+        <p><strong>Problem:</strong> Added transactions don't appear</p>
+        <p><strong>Solutions:</strong></p>
+        <ol>
+            <li>Check if filters are applied (date range, source, nature)</li>
+            <li>Clear all filters and try again</li>
+            <li>Refresh the page</li>
+            <li>Verify transaction was successfully saved</li>
+        </ol>
+
+        <h3>Incorrect Balance</h3>
+        <p><strong>Problem:</strong> Account balance doesn't match expectations</p>
+        <p><strong>Solutions:</strong></p>
+        <ol>
+            <li>Review all transactions for that account</li>
+            <li>Check for duplicate transactions</li>
+            <li>Verify transfer transactions are correctly recorded</li>
+            <li>Ensure all transactions are assigned to correct accounts</li>
+        </ol>
+
+        <h3>Chart Not Loading</h3>
+        <p><strong>Problem:</strong> Financial overview chart doesn't display</p>
+        <p><strong>Solutions:</strong></p>
+        <ol>
+            <li>Ensure JavaScript is enabled</li>
+            <li>Check internet connection</li>
+            <li>Refresh the page</li>
+            <li>Try a different browser</li>
+            <li>Clear browser cache</li>
+        </ol>
+
+        <h2>Error Messages</h2>
+
+        <h3>"Session Expired"</h3>
+        <ul>
+            <li><strong>Cause:</strong> Your login session has timed out</li>
+            <li><strong>Solution:</strong> Log in again</li>
+        </ul>
+
+        <h3>"Unauthorized Access"</h3>
+        <ul>
+            <li><strong>Cause:</strong> Attempting to access admin features without admin privileges</li>
+            <li><strong>Solution:</strong> Log in with an admin account</li>
+        </ul>
+
+        <h3>"Invalid Input"</h3>
+        <ul>
+            <li><strong>Cause:</strong> Form validation failed</li>
+            <li><strong>Solution:</strong> Check all required fields are filled correctly</li>
+        </ul>
+    </section>
+
+    <section class="section" id="faq">
+        <h1>8. FAQ</h1>
+
+        <h2>General Questions</h2>
+
+        <h3>Q: Is my financial data secure?</h3>
+        <p><strong>A:</strong> Yes, the application uses session-based authentication and password hashing. However, always use strong passwords and log out when finished.</p>
+
+        <h3>Q: Can I access the app from multiple devices?</h3>
+        <p><strong>A:</strong> Yes, you can log in from any device with a web browser and internet connection.</p>
+
+        <h3>Q: How often should I update my transactions?</h3>
+        <p><strong>A:</strong> For best results, update transactions daily or as they occur to maintain accurate financial records.</p>
+
+        <h2>Account Management</h2>
+
+        <h3>Q: Can I have multiple accounts of the same type?</h3>
+        <p><strong>A:</strong> Yes, you can create multiple bank accounts, cash accounts, or credit cards.</p>
+
+        <h3>Q: What happens if I delete an account with transactions?</h3>
+        <p><strong>A:</strong> Deleting an account may affect related transactions. It's recommended to transfer or delete associated transactions first.</p>
+
+        <h3>Q: How do credit card limits work?</h3>
+        <p><strong>A:</strong> Credit cards can have negative balances (money owed). The available credit is calculated as: Credit Limit + Current Balance.</p>
+
+        <h2>Transaction Questions</h2>
+
+        <h3>Q: Can I edit or delete old transactions?</h3>
+        <p><strong>A:</strong> Yes, you can edit or delete any transaction at any time. Account balances will automatically adjust.</p>
+
+        <h3>Q: What's the difference between Borrow and Expense?</h3>
+        <p><strong>A:</strong> Borrow tracks money you owe to others (debt), while Expense is money spent that you don't need to repay.</p>
+
+        <h3>Q: How do transfers work?</h3>
+        <p><strong>A:</strong> Transfers move money between your accounts. The amount is deducted from the source account and added to the destination account.</p>
+
+        <h3>Q: Can I categorize my expenses?</h3>
+        <p><strong>A:</strong> Yes, you can assign categories (Food, Transport, etc.) and nature (Fixed, Variable, etc.) to expenses for better organization.</p>
+
+        <h2>Reporting & Analysis</h2>
+
+        <h3>Q: How do I see my spending by category?</h3>
+        <p><strong>A:</strong> Use the filtering options on the dashboard to filter by nature or view the transaction history for detailed breakdowns.</p>
+
+        <h3>Q: Can I export my transaction data?</h3>
+        <p><strong>A:</strong> Currently, export functionality is not built-in. Contact your administrator for database export options.</p>
+
+        <h3>Q: What's the best way to track monthly expenses?</h3>
+        <p><strong>A:</strong> Use the date range filter to select a specific month and review the filtered totals.</p>
+
+        <h2>Admin Questions</h2>
+
+        <h3>Q: How do I reset a user's password?</h3>
+        <p><strong>A:</strong> Currently, password reset must be done directly in the database. This feature may be added in future updates.</p>
+
+        <h3>Q: Can I deactivate a user account?</h3>
+        <p><strong>A:</strong> User deactivation features are available through the user status field in the database.</p>
+
+        <h3>Q: How many admin accounts should I create?</h3>
+        <p><strong>A:</strong> Create only as many admin accounts as necessary. Each admin has full system access.</p>
+    </section>
+
+    <section class="section">
+        <h1>Tips for Effective Financial Management</h1>
+
+        <h2>Daily Habits</h2>
+        <ol>
+            <li><strong>Record Immediately</strong>: Add transactions as they happen</li>
+            <li><strong>Review Daily</strong>: Check your dashboard each day</li>
+            <li><strong>Categorize Properly</strong>: Use consistent categories for better analysis</li>
+        </ol>
+
+        <h2>Weekly Practices</h2>
+        <ol>
+            <li><strong>Review Spending</strong>: Analyze your expense patterns</li>
+            <li><strong>Check Balances</strong>: Verify account balances match reality</li>
+            <li><strong>Plan Ahead</strong>: Review upcoming expenses and due dates</li>
+        </ol>
+
+        <h2>Monthly Routines</h2>
+        <ol>
+            <li><strong>Generate Reports</strong>: Use date filters to review monthly spending</li>
+            <li><strong>Analyze Trends</strong>: Compare income vs. expenses</li>
+            <li><strong>Adjust Budget</strong>: Identify areas to reduce unwanted spending</li>
+            <li><strong>Review Debts</strong>: Check outstanding borrowings and plan repayments</li>
+        </ol>
+
+        <h2>Best Practices</h2>
+        <ul>
+            <li><strong>Use Descriptive Names</strong>: Give accounts and transactions clear, meaningful names</li>
+            <li><strong>Add Descriptions</strong>: Include notes for future reference</li>
+            <li><strong>Regular Backups</strong>: Admins should ensure regular database backups</li>
+            <li><strong>Security First</strong>: Always log out when finished, especially on shared devices</li>
+            <li><strong>Consistent Categories</strong>: Use the same categories for similar transactions</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <h1>Appendix</h1>
+
+        <h2>Transaction Category Suggestions</h2>
+
+        <h3>Income Categories:</h3>
+        <ul>
+            <li>Salary</li>
+            <li>Freelance</li>
+            <li>Investment Returns</li>
+            <li>Gifts</li>
+            <li>Refunds</li>
+            <li>Other Income</li>
+        </ul>
+
+        <h3>Expense Categories:</h3>
+        <ul>
+            <li>Food & Dining</li>
+            <li>Transportation</li>
+            <li>Utilities</li>
+            <li>Rent/Mortgage</li>
+            <li>Healthcare</li>
+            <li>Entertainment</li>
+            <li>Shopping</li>
+            <li>Education</li>
+            <li>Insurance</li>
+            <li>Baby Needs</li>
+            <li>Other Expenses</li>
+        </ul>
+
+        <h2>Glossary</h2>
+        <ul>
+            <li><strong>Source</strong>: An account where money is stored (bank, cash, credit card)</li>
+            <li><strong>Transaction</strong>: Any financial activity (income, expense, transfer, etc.)</li>
+            <li><strong>Nature</strong>: Classification of expenses (Fixed, Variable, Unwanted, etc.)</li>
+            <li><strong>Balance</strong>: Current amount of money in an account</li>
+            <li><strong>Credit Limit</strong>: Maximum amount you can borrow on a credit card</li>
+            <li><strong>Outstanding Debt</strong>: Total amount of money you owe to others</li>
+        </ul>
+    </section>
+
+    <hr>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+        <h2>Support & Contact</h2>
+        <p>For technical support or feature requests, please contact your system administrator.</p>
+        <p style="margin-top: 20px;"><strong>Version Information</strong></p>
+        <p>Application: Daily Expenses Manager<br>
+        Version: 1.0.0<br>
+        Last Updated: January 2026</p>
+    </div>
+
+    <div class="no-print" style="position: fixed; bottom: 20px; right: 20px; background: #3498db; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer;" onclick="window.print()">
+        <strong>📄 Print to PDF</strong>
+    </div>
+
+    <script>
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

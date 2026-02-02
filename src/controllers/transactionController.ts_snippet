@@ -1,0 +1,51 @@
+
+// Render Given Loans Report
+export const renderGivenLoansReport = async (req: Request, res: Response) => {
+    try {
+        const userId = req.session.userId;
+
+        // Fetch all Lend and Loan Repayment transactions
+        const transactions = await Transaction.find({
+            user: userId,
+            type: { $in: ['lend', 'loan_repayment'] }
+        }).sort({ date: -1 });
+
+        // Aggregate by Borrower
+        let totalLent = 0;
+        let totalRecovered = 0;
+        const borrowerStats: { [key: string]: { lent: number, repaid: number, balance: number } } = {};
+
+        transactions.forEach(t => {
+            // Normalize borrower name (to lower case for grouping, but keep display name?)
+            // We'll just use the raw string for now
+            const borrower = t.borrower || 'Unknown';
+
+            if (!borrowerStats[borrower]) {
+                borrowerStats[borrower] = { lent: 0, repaid: 0, balance: 0 };
+            }
+
+            if (t.type === 'lend') {
+                totalLent += t.amount;
+                borrowerStats[borrower].lent += t.amount;
+                borrowerStats[borrower].balance += t.amount;
+            } else if (t.type === 'loan_repayment') {
+                totalRecovered += t.amount;
+                borrowerStats[borrower].repaid += t.amount;
+                borrowerStats[borrower].balance -= t.amount;
+            }
+        });
+
+        const totalOutstanding = totalLent - totalRecovered;
+
+        res.render('transactions/given_loans_report', {
+            transactions, // Pass detailed history if needed
+            totalLent,
+            totalRecovered,
+            totalOutstanding,
+            borrowerStats
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+    }
+};

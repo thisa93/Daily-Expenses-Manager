@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import User from '../models/User.js';
 
+import { seedDefaultCategories } from '../utils/seedCategories.js';
+
 // Register User
 export const registerUser = async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
@@ -12,6 +14,7 @@ export const registerUser = async (req: Request, res: Response) => {
         }
         const user = await User.create({ username, email, password, role });
         req.session.userId = (user._id as unknown as string);
+        await seedDefaultCategories(user._id as unknown as string);
         res.redirect('/dashboard');
     } catch (error) {
         console.error(error);
@@ -29,6 +32,7 @@ export const loginUser = async (req: Request, res: Response) => {
                 return res.status(403).render('auth/login', { error: 'Your account has been suspended. Contact Admin.' });
             }
             req.session.userId = (user._id as unknown as string);
+            await seedDefaultCategories(user._id as unknown as string);
             res.redirect('/dashboard');
         } else {
             res.status(401).render('auth/login', { error: 'Invalid email or password' });

@@ -1,0 +1,197 @@
+<%- include('../partials/header') %>
+
+    <div class="row no-print mb-4">
+        <div class="col-md-12">
+            <h2 class="text-center mb-3">
+                <i class="fas fa-file-invoice-dollar me-2 text-gradient"></i>
+                Month End Summary
+            </h2>
+            <div class="card bg-light">
+                <div class="card-body py-2">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a href="/transactions/month-end-report?month=<%= navigation.prevMonth %>&year=<%= navigation.prevYear %>"
+                            class="btn btn-outline-secondary btn-sm me-3" title="Previous Month">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+
+                        <form action="/transactions/month-end-report" method="GET"
+                            class="row g-2 align-items-center justify-content-center d-inline-flex">
+                            <div class="col-auto">
+                                <label class="col-form-label btn-sm">Select Period:</label>
+                            </div>
+                            <div class="col-auto">
+                                <select name="month" class="form-select form-select-sm">
+                                    <% const months=["January", "February" , "March" , "April" , "May" , "June" , "July"
+                                        , "August" , "September" , "October" , "November" , "December" ]; %>
+                                        <% months.forEach((m, index)=> { %>
+                                            <option value="<%= index + 1 %>" <%=selectedMonth===(index + 1) ? 'selected'
+                                                : '' %>><%= m %>
+                                            </option>
+                                            <% }) %>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" name="year" class="form-control form-control-sm"
+                                    value="<%= selectedYear %>" style="width: 80px;">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary btn-sm">Go</button>
+                            </div>
+                        </form>
+
+                        <a href="/transactions/month-end-report?month=<%= navigation.nextMonth %>&year=<%= navigation.nextYear %>"
+                            class="btn btn-outline-secondary btn-sm ms-3" title="Next Month">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+
+                        <div class="ms-4 border-start ps-4">
+                            <button onclick="window.print()" class="btn btn-success btn-sm">
+                                <i class="fas fa-file-pdf me-1"></i> Save as PDF
+                            </button>
+                            <a href="/dashboard" class="btn btn-secondary btn-sm ms-2">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Printable Report Area -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card border-0 shadow-none printable-area">
+                <div class="card-body p-4">
+                    <!-- Report Header -->
+                    <div class="text-center mb-5 border-bottom pb-3">
+                        <h1 class="display-6 fw-bold text-primary">Monthly Expense Report</h1>
+                        <p class="text-muted lead">
+                            Period: <%= new Date(selectedYear, selectedMonth - 1).toLocaleString('default', {
+                                month: 'long' }) %>
+                                <%= selectedYear %>
+                        </p>
+                    </div>
+
+                    <!-- Summary Cards (Grid) -->
+                    <div class="row text-center mb-4">
+                        <div class="col-3">
+                            <div class="p-3 border rounded bg-success-light text-success">
+                                <small class="text-uppercase fw-bold">Total Income</small>
+                                <h3 class="mb-0">Rs. <%= totalIncome.toFixed(2) %>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="p-3 border rounded bg-danger-light text-danger">
+                                <small class="text-uppercase fw-bold">Total Expenses</small>
+                                <h3 class="mb-0">Rs. <%= totalExpense.toFixed(2) %>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="p-3 border rounded bg-info-light text-info">
+                                <small class="text-uppercase fw-bold">Active Loans Given</small>
+                                <h3 class="mb-0">Rs. <%= totalLent.toFixed(2) %>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="p-3 border rounded bg-primary-light text-primary">
+                                <small class="text-uppercase fw-bold">Net Savings</small>
+                                <h3 class="mb-0">Rs. <%= netSavings.toFixed(2) %>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Breakdown -->
+                    <div class="row mb-5">
+                        <div class="col-md-6 offset-md-3">
+                            <h5 class="text-center border-bottom pb-2 mb-3">Expense Breakdown by Category</h5>
+                            <table class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th class="text-end">Amount</th>
+                                        <th class="text-end">%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% Object.entries(categoryBreakdown).sort(([,a], [,b])=> b - a).forEach(([cat,
+                                        amount]) => { %>
+                                        <tr>
+                                            <td>
+                                                <%= cat %>
+                                            </td>
+                                            <td class="text-end">Rs. <%= amount.toFixed(2) %>
+                                            </td>
+                                            <td class="text-end">
+                                                <%= totalExpense> 0 ? ((amount/totalExpense)*100).toFixed(1) : 0 %>%
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                            <tr class="fw-bold border-top">
+                                                <td>Total</td>
+                                                <td class="text-end">Rs. <%= totalExpense.toFixed(2) %>
+                                                </td>
+                                                <td class="text-end">100%</td>
+                                            </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Details (Optional or Summary) -->
+                    <!-- <div class="row">
+                        <div class="col-12">
+                            <h5 class="border-bottom pb-2">Top Expenses</h5>
+                             (Ideally list top 5 or 10 expenses here if needed) 
+                        </div>
+                    </div> -->
+
+                    <div class="text-center text-muted mt-5 small">
+                        Generated by Daily Expenses Manager on <%= new Date().toLocaleString() %>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .bg-success-light {
+            background-color: #d1e7dd;
+        }
+
+        .bg-danger-light {
+            background-color: #f8d7da;
+        }
+
+        .bg-info-light {
+            background-color: #cff4fc;
+        }
+
+        .bg-primary-light {
+            background-color: #cfe2ff;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            .printable-area {
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            body {
+                background: white;
+            }
+
+            .card {
+                border: none;
+            }
+        }
+    </style>
+
+    <%- include('../partials/footer') %>

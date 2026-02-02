@@ -1,7 +1,9 @@
 import User from '../models/User.js';
+import { seedDefaultCategories } from '../utils/seedCategories.js';
 // Register User
 export const registerUser = async (req, res) => {
-    const { username, email, password, role } = req.body;
+    const { username, email, password } = req.body;
+    const role = 'member'; // Force role to member for public registration
     try {
         const userExists = await User.findOne({ email });
         if (userExists) {
@@ -9,6 +11,7 @@ export const registerUser = async (req, res) => {
         }
         const user = await User.create({ username, email, password, role });
         req.session.userId = user._id;
+        await seedDefaultCategories(user._id);
         res.redirect('/dashboard');
     }
     catch (error) {
@@ -22,7 +25,11 @@ export const loginUser = async (req, res) => {
     try {
         const user = await User.findOne({ email });
         if (user && (await user.matchPassword(password))) {
+            if (user.status === 'suspended') {
+                return res.status(403).render('auth/login', { error: 'Your account has been suspended. Contact Admin.' });
+            }
             req.session.userId = user._id;
+            await seedDefaultCategories(user._id);
             res.redirect('/dashboard');
         }
         else {
